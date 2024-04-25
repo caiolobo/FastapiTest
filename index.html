@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name_item" />
+    <button id="btn">ADD</button>
+
+    <div id="list">
+
+
+    </div>
+
+    <script>
+        let btn = document.getElementById('btn');
+        let list = document.getElementById('list');
+
+        btn.addEventListener('click', function(){
+            let name_item = document.getElementById('name_item').value;
+
+            fetch("http://127.0.0.1:8000/itens", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                
+                body: JSON.stringify({name_item: name_item}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucesso: ', data);
+            })
+            .then(()=> {
+                let li = document.createElement('li');
+                li.innerHTML = name_item;
+                list.appendChild(li);
+            })
+
+        });
+
+
+
+    </script>
+</body>
+</html>

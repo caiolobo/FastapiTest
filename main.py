@@ -1,9 +1,26 @@
 from fastapi import FastAPI, HTTPException 
 import mysql.connector
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 # estrutura de conexão com o banco de dados
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:5500",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 db = mysql.connector.connect(
     host='localhost',
